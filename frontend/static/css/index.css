@@ -363,6 +363,38 @@ footer .container-fluid{
     filter: blur(5px);
 }
 
+/* creo la animacion para la apertura del formulario */
+
+.animated__fadeInUp{
+    animation: fadeInUp 1s;
+    animation-fill-mode: forwards;
+}
+.animate__fadeInDown{
+    animation: fadeInDown 1s;
+    animation-fill-mode: forwards;
+}
+@keyframes fadeInUp{
+    0%{
+        opacity: 0;
+        /* transform: translateY(100px); */
+    }
+    100%{
+        opacity: 1;
+        /* transform: translateY(0); */
+    }
+}
+@keyframes fadeInDown{
+    0%{
+        opacity: 0;
+        transform: translateY(-2000px);
+    }
+    100%{
+        opacity: 1;
+        transform: translateY(100);
+    }
+}
+
+
 @media screen and (max-width: 768px){
     .nav-contacto{
         justify-content: center;

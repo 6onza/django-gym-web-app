@@ -96,18 +96,22 @@ const loadProducts = async () => {
 }
 loadProducts();
 
-function showHideContactForm(action) {
-    // blurreo el resto de la pagina
-    let body = document.querySelector('body');
-    let contactForm = document.querySelector('#contact-form');
+function loadCardAnimation() {
+    let card = document.querySelector('.card');
+    card.classList.add('animate__animated', 'animate__fadeInDown');
+}
 
-    if (action == 'open') {
-        // body.classList.add('blurred');
-        contactForm.classList.remove('d-none');
+function showHideContactForm(action) {
+    let form = document.querySelector('#contact-form');
+    if(action == 'open'){
+        // creo la animacion para la apertura del formulario
+        form.classList.remove('d-none');
+        form.classList.add('animate__animated', 'animate__fadeInDown');
     }
-    if (action == 'close') {
-        // body.classList.remove('blurred');
-        contactForm.classList.add('d-none');
+    if(action == 'close'){
+        form.classList.add('d-none');
+        form.classList.remove('animate__animated', 'animated__fadeInUp');
     }
 
 }
+

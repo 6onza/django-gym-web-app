@@ -94,4 +94,20 @@ const loadProducts = async () => {
 
 })
 }
- loadProducts();
+loadProducts();
+
+function showHideContactForm(action) {
+    // blurreo el resto de la pagina
+    let body = document.querySelector('body');
+    let contactForm = document.querySelector('#contact-form');
+
+    if (action == 'open') {
+        // body.classList.add('blurred');
+        contactForm.classList.remove('d-none');
+    }
+    if (action == 'close') {
+        // body.classList.remove('blurred');
+        contactForm.classList.add('d-none');
+    }
+
+}

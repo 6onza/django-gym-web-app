@@ -50,7 +50,7 @@
                 <ul class="navbar-nav mb-0 mb-lg-0 ms-auto me-3">
                     
                     <li class="nav-item contacto-nav">
-                        <a class="nav-link p-1 pb-1" href="#">Contacto</a>
+                        <button class="nav-link p-1 pb-1" onclick="showHideContactForm('open')">Contacto</button>
                     </li>     
                 </ul>
             </div>
@@ -206,6 +206,19 @@
                 </div>
             </div>
            
+        </div>
+        <div id="contact-form" class="d-none">
+            <!-- cruz cerrar -->
+            <i class="fa-solid fa-times-circle" style=" font-size: 25px; float: right; cursor: pointer;" onclick="showHideContactForm('close')"></i>
+            <h5 style="color: #b92323">Contactanos</h5>
+            <form action="" method="POST">
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label" style="color: #606060;">Email</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <label for="exampleInputPassword1" class="form-label" style="color: #606060;">Mensaje</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <button type="submit" class="btn btn-dark mt-3">Enviar</button>
+                </div>
         </div>
         <p class="copyright-text">
             Copyright © 2022 Gym Fitness. Todos los derechos reservados.

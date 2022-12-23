@@ -62,6 +62,32 @@ nav{
     text-align: center;
     transition: .3s;
 }
+nav button{
+    background: None;
+    color: #ffffff;
+    border: 0px;
+    border-radius: 5px;
+    padding: 1%;
+    font-size: 1.5rem;
+    font-weight: 500;
+    transition: .3s;
+}
+#contact-form{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    height: 50%;
+    background-color: #000;
+    border-radius: 5px;
+    box-shadow: 0 0 10px #000;
+    padding: 2%;
+    z-index: 2;
+}
+textarea {
+    resize: none;
+  }
 .intro{
     color: #ffffff;
 }
@@ -333,6 +359,10 @@ footer .container-fluid{
     text-decoration: none;
     transition: .5s;
 }
+.blurred{
+    filter: blur(5px);
+}
+
 @media screen and (max-width: 768px){
     .nav-contacto{
         justify-content: center;

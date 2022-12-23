@@ -47,7 +47,7 @@ nav{
 }
 .nav-link:hover{
     color: #b92323;
-    transition: .3s;
+    transition: .1s;
 }
 .nav--scrolled{
     background-color: #000;
@@ -124,6 +124,12 @@ textarea {
     font-weight: 400;
     margin-bottom: 1%;
     color: #fff;
+}
+.carousel-videos{
+    width: 35em;
+    height: 25em;
+    margin: 0 auto;
+    margin-top: 5%;
 }
 .arrow-down{
     margin-top: 8%;

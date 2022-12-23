@@ -83,7 +83,7 @@ const loadProducts = async () => {
                         <p class="card-text ">${product.description}</p>
                         <p class="card-text ">$${product.price}</p>
                         
-                        <button class="btn btn-dark ms-5" onclick="mostrarInfoProduct('proteina')">Comprar</button>
+                        <button class="btn btn-dark ms-5" onclick="addToCart(${product.id})">Comprar</button>
                     </div>
                 </div>
             </div>

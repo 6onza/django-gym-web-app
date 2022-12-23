@@ -47,11 +47,19 @@
                 <span class="navbar-toggler-icon"></span>
               </button>
             <div class="collapse navbar-collapse" id="navbarText">
-                <ul class="navbar-nav mb-0 mb-lg-0 ms-auto me-3">
-                    
-                    <li class="nav-item contacto-nav">
-                        <button class="nav-link p-1 pb-1" onclick="showHideContactForm('open')">Contacto</button>
-                    </li>     
+                <ul class="navbar-nav mb-0 mb-lg-0 ms-auto  ">
+                           
+                    <li class=" me-2 nav-item ms-2" style="color: #ffffff;
+                    text-align: center;
+                    transition: .3s;">
+                        <button onclick="window.location.href='/login'" class="btn btn-outline-danger" style="border-radius: 20px; font-size: 1.2em; font-weight: 600; padding: 10px 20px;">Ingresar</button>
+                    </li>
+                    <!-- <li class="nav-item contacto-nav me-2">
+                        <a href="/login" class="nav-link">Cuenta</a>
+                    </li> 
+                    <li class="nav-item contacto-nav ">
+                        <a href="/login" class="nav-link">Contacto</a>
+                    </li>  -->
                 </ul>
             </div>
         </div>
@@ -75,9 +83,14 @@
     </div>
     <div class="membresias container" id="membresias">
         <div class="container-membresias" style="justify-content: center; align-items: center; display: flex;">
-            <div class="entrena-con-nosotros w-100">
+            <div class="entrena-con-nosotros w-100 mt-5">
                 <h3>¡ENTRENA CON NOSOTROS!</h3>
                 <p>Te ofrecemos el primer dia de prueba gratis, para que puedas conocer<br> nuestro gimnasio y nuestros servicios.</p>
+                <div class="carousel-videos m-0 p-0">
+                    <video width="100%" height="100%" autobuffer playsinline="" preload="auto" muted="" loop="" tabindex="-1" autoplay="">
+                        <source src="public/crossfit.mp4" type="video/mp4">
+                    </video>
+                </div>
             </div>
             <div class="membresia me-5 mt-5" style="color: #fff">
                 <h3 style="text-align: center;">STANDAR</h3>
@@ -207,18 +220,18 @@
             </div>
            
         </div>
-        <div id="contact-form" class="d-none">
+        <div id="contact-form" class="">
             <!-- cruz cerrar -->
             <i class="fa-solid fa-times-circle" style=" font-size: 25px; float: right; cursor: pointer;" onclick="showHideContactForm('close')"></i>
-            <h5 style="color: #b92323">Contactanos</h5>
-            <form action="" method="POST">
-                <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label" style="color: #606060;">Email</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                    <label for="exampleInputPassword1" class="form-label" style="color: #606060;">Mensaje</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                    <button type="submit" class="btn btn-dark mt-3">Enviar</button>
-                </div>
+            <h5 style="color: #b92323">Login</h5>
+            <form id="loginForm" action="https://127.0.0.1:8000/api/v1/login" method="POST">
+                <label for="username">Usuario:</label><br>
+                <input type="username" id="username" name="username"><br>
+                <label for="password">Contraseña:</label><br>
+                <input type="password" id="password" name="password"><br><br>
+                <br>
+                <button type="submit">Iniciar sesión</button>
+              </form> 
         </div>
         <p class="copyright-text">
             Copyright © 2022 Gym Fitness. Todos los derechos reservados.
@@ -233,6 +246,8 @@
         <i class="fa-solid fa-chevron-up"></i>
     </a>
 
-    <script src="static/js/app.js"></script>
+    <script src="static/js/index.js"></script>
+    <script src="static/js/cart.js"></script>
+    <script src="static/js/validations.js"></script>
 </body>
 </html>

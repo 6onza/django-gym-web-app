@@ -102,7 +102,7 @@ function loadCardAnimation() {
 }
 
 function showHideContactForm(action) {
-    let form = document.querySelector('#contact-form');
+    let form = document.querySelector('#login-form');
     if(action == 'open'){
         // creo la animacion para la apertura del formulario
         form.classList.remove('d-none');
@@ -112,6 +112,30 @@ function showHideContactForm(action) {
         form.classList.add('d-none');
         form.classList.remove('animate__animated', 'animated__fadeInUp');
     }
-
 }
 
+// verifico si esta logeado el usuario
+if (localStorage.getItem('token')) {
+    // si esta logeado lo redirijo a la pagina de productos
+    document.querySelector('#login').classList.add('d-none');
+    document.querySelector('#logout').classList.remove('d-none');
+    // document.querySelector('#cart').classList.remove('d-none');
+    // document.querySelector('#profile').classList.remove('d-none');
+} else {
+    // si no esta logeado lo redirijo a la pagina de login
+    document.querySelector('#login').classList.remove('d-none');
+    document.querySelector('#logout').classList.add('d-none');
+    // document.querySelector('#cart').classList.add('d-none');
+    // document.querySelector('#profile').classList.add('d-none');
+}
+
+function showLoginForm(){
+    let loginForm = document.querySelector('#login-form');
+    loginForm.classList.remove('d-none');
+    loginForm.classList.add('animate__animated', 'animate__fadeInDown');
+}
+
+function logout() {
+    localStorage.removeItem('token');
+    window.location.href = 'http://localhost:5500/frontend/index.html';
+}

@@ -6,7 +6,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
 
     // verifico que le username y password sean validos y hago la peticion a la api con el token
     if (username.length > 0 && password.length > 0) {
-        fetch('http://localhost:3000/api/v1/login', {
+        fetch('http://localhost:8000/api/v1/login/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -20,14 +20,10 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
         .then(data => {
             if (data.token) {
                 localStorage.setItem('token', data.token);
-                window.location.href = 'http://localhost:5500/index.html';
+                window.location.href = 'http://localhost:5500/frontend/index.html';
             } else {
                 alert('Usuario o contraseña incorrectos');
             }
         });
-    } else {
-        alert('Usuario o contraseña incorrectos');
-    }
+    } 
 });
-
-    

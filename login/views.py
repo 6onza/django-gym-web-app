@@ -1,43 +1,50 @@
-from django.contrib.auth import get_user_model
-from django.contrib.auth.password_validation import validate_password
-from django.core.exceptions import ValidationError
-from rest_framework import status
+from django.contrib.auth import authenticate, login
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from django.contrib.auth import authenticate, login, logout
-
-class RegisterView(APIView):
-    def post(self, request):
-        username = request.data.get('username')
-        email = request.data.get('email')
-        password = request.data.get('password')
-
-        User = get_user_model()
-
-        try:
-            validate_password(password)
-        except ValidationError as e:
-            return Response({'password': e.messages}, status=status.HTTP_400_BAD_REQUEST)
-
-        user = User.objects.create_user(username=username, email=email, password=password)
-        user.save()
-
-        return Response({'success': 'User created successfully'}, status=status.HTTP_201_CREATED)
+from rest_framework import status
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from django.db import IntegrityError
+from django.contrib.auth.models import User
 
 
 class LoginView(APIView):
-    def post(self, request):
-        username = request.data.get('username')
-        password = request.data.get('password')
-        user = authenticate(request, username=username, password=password)
+    permission_classes = (AllowAny,)
+
+    def post(self, request, *args, **kwargs):
+        print("*"*100)
+        print(request.data)
+        username = request.data.get("username")
+        password = request.data.get("password")
+        user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            return Response({'success': 'Successfully logged in'}, status=status.HTTP_200_OK)
+            token, created = Token.objects.get_or_create(user=user)
+            return Response({"token": token.key}, status=status.HTTP_200_OK)
         else:
-            return Response({'error': 'Invalid login credentials'}, status=status.HTTP_401_UNAUTHORIZED)
-        
+            return Response({"error": "Wrong Credentials"}, status=status.HTTP_400_BAD_REQUEST)
+
 
 class LogoutView(APIView):
-    def post(self, request):
-        logout(request)
-        return Response({'success': 'Successfully logged out'}, status=status.HTTP_200_OK)
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request, *args, **kwargs):
+        request.user.auth_token.delete()
+        return Response(status=status.HTTP_200_OK)
+
+
+class RegisterView(APIView):
+    permission_classes = (AllowAny,)
+
+    def post(self, request, *args, **kwargs):
+        username = request.data.get("username")
+        password = request.data.get("password")
+        email = request.data.get("email")
+        try:
+            user = User.objects.create_user(username, email, password)
+        except IntegrityError:
+            return Response({"error": "That username has already been taken. Please choose a new username"},
+                            status=status.HTTP_400_BAD_REQUEST)
+        token = Token.objects.create(user=user)
+        return Response({"token": token.key}, status=status.HTTP_201_CREATED)

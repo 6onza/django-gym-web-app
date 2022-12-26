@@ -1,59 +1,65 @@
-function addToCart(productId) {
-    // Obtener el valor actual de la cookie del carrito
-    var cart = getCookie("cart");
-  
-    // si esta logeado y tiene una cookie de carrito
-    if (cart != "") {
-      // Si el carrito no está vacío, añadir el nuevo producto al final del array
-      cart += "," + productId;
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+    while (c.charAt(0) == ' ') {
+        c = c.substring(1);
     }
-    else {
-      // Si el carrito está vacío, añadir el nuevo producto al array
-      cart = productId;
+    if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
     }
-}
- 
-function setCookie(name, value, days) {
-    // Establecer el valor de la cookie con el nombre y el valor especificados
-    var date = new Date();
-    date.setTime(date.getTime() + (days*24*60*60*1000));
-    var expires = "expires="+ date.toUTCString();
-    document.cookie = name + "=" + value + ";" + expires + ";path=/";
+  }
+    return "";
 }
 
-function deleteCookie(name) {
-    // Eliminar la cookie con el nombre especificado
-    document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-}
-
-function deleteCart() {
-    // Eliminar la cookie del carrito
-    deleteCookie("cart");
-}
-
-function getCart() {
-    // Obtener el valor de la cookie del carrito
+function addToCart(item) {
+    // Obtén el valor actual de la cookie
     var cart = getCookie("cart");
-  
-    // Si la cookie del carrito está vacía, devolver un array vacío
+
+    // Si la cookie está vacía, inicializa el carrito como una lista vacía
     if (cart == "") {
-      return [];
+        cart = [];
+    } else {
+        // Si no está vacía, convierte el valor de la cookie en una lista
+        cart = JSON.parse(cart);
     }
-  
-    // Si la cookie del carrito no está vacía, devolver un array con los IDs de los productos
-    return cart.split(",");
+
+    // Añade el elemento a la lista
+    cart.push(item);
+
+    // Guarda la lista actualizada en la cookie
+    setCookie("cart", JSON.stringify(cart), 7);
 }
 
-
-function getCartTotal() {
-    // Obtener el valor de la cookie del carrito
+function removeFromCart(item) {
+    // Obtén el valor actual de la cookie
     var cart = getCookie("cart");
-  
-    // Si la cookie del carrito está vacía, devolver 0
+
+    // Si la cookie está vacía, inicializa el carrito como una lista vacía
     if (cart == "") {
-      return 0;
+        cart = [];
+    } else {
+        // Si no está vacía, convierte el valor de la cookie en una lista
+        cart = JSON.parse(cart);
     }
-  
-    // Si la cookie del carrito no está vacía, devolver el número de IDs de productos
-    return cart.split(",").length;
+
+    // Encuentra el índice del elemento a eliminar
+    var index = cart.indexOf(item);
+
+    // Si el elemento existe en el carrito, elimínalo
+    if (index > -1) {
+        cart.splice(index, 1);
+    }
+
+    // Guarda la lista actualizada en la cookie
+    setCookie("cart", JSON.stringify(cart), 7);
 }

@@ -1,9 +1,3 @@
-function setCookie(cname, cvalue, exdays) {
-    var d = new Date();
-    d.setTime(d.getTime() + (exdays*24*60*60*1000));
-    var expires = "expires="+ d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-}
 
 function getCookie(cname) {
     var name = cname + "=";
@@ -21,45 +15,97 @@ function getCookie(cname) {
     return "";
 }
 
-function addToCart(item) {
-    // Obtén el valor actual de la cookie
-    var cart = getCookie("cart");
 
-    // Si la cookie está vacía, inicializa el carrito como una lista vacía
+
+
+window.onload = async () => {
+    const cart = getCookie("cart");
+    let products = [];
+
     if (cart == "") {
-        cart = [];
+        document.querySelector('#cart-empty').classList.remove('d-none');
+        document.querySelector('#cart-buy').classList.add('d-none');
     } else {
-        // Si no está vacía, convierte el valor de la cookie en una lista
-        cart = JSON.parse(cart);
+        document.querySelector('#cart-empty').classList.add('d-none');
+        document.querySelector('#cart-buy').classList.remove('d-none');
     }
+    await
 
-    // Añade el elemento a la lista
-    cart.push(item);
-
-    // Guarda la lista actualizada en la cookie
-    setCookie("cart", JSON.stringify(cart), 7);
+    fetch("http://localhost:8000/api/v1/products", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Basic " + btoa("gonza:gonza")
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(product => {
+                products.push(product)
+            });
+        }
+    )
+    .catch(error => console.log(error))
+    .finally(() => {
+        const productsContainer = document.querySelector('#cart-table-body');
+        products.forEach(product => {
+            if (cart.includes(product.id)) {
+                productsContainer.innerHTML += `
+                <tr>
+                    <td style="color:#fff;">
+                        <img src="public/products/${product.name}.png" width="100px" alt="${product.name}" class="img-fluid z-depth-0">
+                    </td>
+                    <td style="color: #fff;" class="mt-5">${product.price}</td>
+                    <td style="color: #fff;" class="mt-5">
+                    <span class="qty" id="qty-${product.id}">1</span>
+                    <div class="btn-group radio-group" data-toggle="buttons">
+                        <label class="btn btn-sm btn-secondary btn-rounded waves-effect waves-light" onclick="decreaseQuantity(${product.id}, ${product.price})">
+                            <a href="#" style="text-decoration: none; color: #000">—</a>
+                        </label>
+                        <label class="btn btn-sm btn-secondary btn-rounded waves-effect waves-light" onclick="increaseQuantity(${product.id}, ${product.price})">
+                            <a href="#" style="text-decoration: none; color: #000">+</a>
+                        </label>
+                    </div>
+                    </td>
+                    <td class="font-weight-bold mt-5" style="color: #fff;">
+                        <strong id="price-${product.id}" class="product-price">${product.price}</strong>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-sm btn-danger waves-effect waves-light">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>`;
+            }
+        });
+    })
+    updateTotalCartPrice();
 }
 
-function removeFromCart(item) {
-    // Obtén el valor actual de la cookie
-    var cart = getCookie("cart");
+function increaseQuantity(id, price) {
+    const quantity = document.querySelector(`#qty-${id}`);
+    quantity.innerHTML = parseInt(quantity.innerHTML) + 1;
+    const priceElement = document.querySelector(`#price-${id}`);
+    priceElement.innerHTML = parseInt(priceElement.innerHTML) + price;
+    updateTotalCartPrice();
 
-    // Si la cookie está vacía, inicializa el carrito como una lista vacía
-    if (cart == "") {
-        cart = [];
-    } else {
-        // Si no está vacía, convierte el valor de la cookie en una lista
-        cart = JSON.parse(cart);
-    }
-
-    // Encuentra el índice del elemento a eliminar
-    var index = cart.indexOf(item);
-
-    // Si el elemento existe en el carrito, elimínalo
-    if (index > -1) {
-        cart.splice(index, 1);
-    }
-
-    // Guarda la lista actualizada en la cookie
-    setCookie("cart", JSON.stringify(cart), 7);
 }
+
+function decreaseQuantity(id, price) {
+    const quantity = document.querySelector(`#qty-${id}`);
+    if (quantity.innerHTML > 1) {
+        quantity.innerHTML = parseInt(quantity.innerHTML) - 1;
+        const priceElement = document.querySelector(`#price-${id}`);
+        priceElement.innerHTML = parseInt(priceElement.innerHTML) - price;
+    }
+    updateTotalCartPrice();
+}
+function updateTotalCartPrice() {
+    const prices = document.querySelectorAll('.product-price');
+    let total = 0;
+    prices.forEach(price => {
+        total += parseInt(price.innerHTML);
+    });
+    document.querySelector('#total-cart-price').innerHTML = total;
+}
+

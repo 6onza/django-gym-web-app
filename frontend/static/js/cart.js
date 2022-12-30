@@ -1,3 +1,6 @@
+const username = process.env.API_USERNAME;
+const password = process.env.API_PASSWORD;
+
 
 function getCookie(cname) {
     var name = cname + "=";
@@ -15,6 +18,20 @@ function getCookie(cname) {
     return "";
 }
 
+function removeFromCart(productId) {
+    // Obtén el valor actual de la cookie
+    var cart = getCookie("cart");
+
+    if (cart.includes(productId)) {
+        // Si el producto ya está en el carrito, elimínalo
+        cart = cart.replace(productId + ",", "").replace("," + productId, "").replace(productId, "");
+        // Actualiza la cookie
+        document.cookie = "cart=" + cart + "; path=/";
+        // Elimina el producto de la tabla
+        document.querySelector(`#cart-table-body tr td button[onclick="removeFromCart(${productId})"]`).parentElement.parentElement.remove();
+    }
+    updateTotalCartPrice();
+}
 
 
 
@@ -35,7 +52,7 @@ window.onload = async () => {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Basic " + btoa("gonza:gonza")
+                "Authorization": "Basic " + btoa(username + ":" + password)
             }
         })
         .then(response => response.json())
@@ -71,7 +88,7 @@ window.onload = async () => {
                         <strong id="price-${product.id}" class="product-price">${product.price}</strong>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-sm btn-danger waves-effect waves-light">
+                        <button type="button" class="btn btn-sm btn-danger waves-effect waves-light" onclick="removeFromCart(${product.id})">
                             <i class="fa fa-trash"></i>
                         </button>
                     </td>

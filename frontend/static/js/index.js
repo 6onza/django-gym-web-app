@@ -1,3 +1,7 @@
+// obtengo el usuario y contraseña para la api que se encuentran en el .env
+const username = process.env.API_USERNAME;
+const password = process.env.API_PASSWORD;
+
 window.addEventListener('scroll', function() {
     let nav = document.querySelector('nav');
     let navContact = document.querySelector('.nav-contacto');  
@@ -54,12 +58,13 @@ select.addEventListener('change', function() {
 
 const loadProducts = async () => {
     const products = []
+    console.log(username+":"+password)
 
     fetch("http://localhost:8000/api/v1/products", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Basic " + btoa("gonza:gonza")
+                "Authorization": "Basic " + btoa(username + ":" + password)
             }
         })
         .then(response => response.json())
@@ -83,7 +88,7 @@ const loadProducts = async () => {
                         <p class="card-text ">${product.description}</p>
                         <p class="card-text ">$${product.price}</p>
                         
-                        <button class="btn btn-dark ms-5" onclick="addToCart(${product.id})">Añadir al carrito</button>
+                        <button class="btn btn-dark ms-5" onclick="addToCart(${product.id})">Comprar</button>
                     </div>
                 </div>
             </div>

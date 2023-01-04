@@ -1,6 +1,3 @@
-const username = process.env.API_USERNAME;
-const password = process.env.API_PASSWORD;
-
 
 function getCookie(cname) {
     var name = cname + "=";
@@ -51,8 +48,7 @@ window.onload = async () => {
     fetch("http://localhost:8000/api/v1/products", {
             method: "GET",
             headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Basic " + btoa(username + ":" + password)
+                "Content-Type": "application/json"
             }
         })
         .then(response => response.json())

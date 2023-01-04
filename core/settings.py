@@ -14,8 +14,11 @@ DEBUG = env.bool("DEBUG", default=False)
 # Raises django's ImproperlyConfigured exception if SECRET_KEY not in os.environ
 SECRET_KEY = env("SECRET_KEY")
 
-ALLLOWED_HOSTS = ['*'] 
 
+CORS_ORIGIN_WHITELIST = [
+    "https://localhost:5500",
+    "http://127.0.0.1:5500",
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -29,7 +32,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'products',
     'rest_framework',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [

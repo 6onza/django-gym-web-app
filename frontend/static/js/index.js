@@ -1,6 +1,3 @@
-// obtengo el usuario y contraseña para la api que se encuentran en el .env
-const username = process.env.API_USERNAME;
-const password = process.env.API_PASSWORD;
 
 window.addEventListener('scroll', function() {
     let nav = document.querySelector('nav');
@@ -64,7 +61,6 @@ const loadProducts = async () => {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Basic " + btoa(username + ":" + password)
             }
         })
         .then(response => response.json())

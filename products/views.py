@@ -11,8 +11,7 @@ from rest_framework.authentication import TokenAuthentication
        
 
 class ProductsView(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
-    authentication_classes = (BasicAuthentication,)
+    
     serializer_class = ProductsSerializer
     queryset = Product.objects.all()
     

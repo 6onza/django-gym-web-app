@@ -145,14 +145,20 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+.product{
+    width: 25em;
+    margin: 0 auto;
+    margin-top: 5%;
+    height: 25em;
+}
 .product-card{
     display: flex;
     justify-content: center;
-    align-items: center;
     flex-wrap: wrap;
     border-bottom: #fff 5px solid;
     border-radius: 5px;
     padding: 10%;
+    height: 100%;
 }
 .product-card h5{
     font-family: 'Anton', sans-serif;
@@ -168,6 +174,9 @@
     transition: .3s;
     scale: 1.05;
     color: #b92323;
+}
+.product-card .card-body{
+    
 }
 
 .btn-dark:hover{
@@ -415,6 +424,12 @@ footer .container-fluid{
     }
     .whatsapp-fijo{
         display: none;
+    }
+    #cart-badge{
+        display: none;
+    }
+    .carrito-text{
+        display: block;
     }
     
 }

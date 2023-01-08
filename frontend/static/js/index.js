@@ -41,11 +41,10 @@ function showFourProducts() {
 
 // cuando carga la pagina el valor del select con id "inputGroupSelect01" es "todos"
 let select = document.querySelector('#inputGroupSelect01');
-select.value = "todos";
 let productos = document.querySelectorAll('.product');
-showFourProducts(select.value);
 
 select.addEventListener('change', function() {
+    let productos = document.querySelectorAll('.product'); 
     productos.forEach(producto => {
         producto.classList.add('d-none');
     });
@@ -55,7 +54,6 @@ select.addEventListener('change', function() {
 
 const loadProducts = async () => {
     const products = []
-    console.log(username+":"+password)
 
     fetch("http://localhost:8000/api/v1/products", {
             method: "GET",
@@ -76,7 +74,7 @@ const loadProducts = async () => {
         products.forEach(product => {
             let productDiv = document.createElement('div');
             productDiv.innerHTML = `
-            <div class="col-12 col-md-6 col-lg-2 ms-4 me-4 mt-5 ms-5 product d-none" style="width:15em;">
+            <div class="col-12 col-md-6 col-lg-2 ms-4 me-4 mt-5 ms-5 product ${product.category}  d-none" style="width:15em;">
                 <div class="product-card" >
                     <img src="public/products/${product.name}.png" width="100em" height="100em"  alt="...">
                     <div class="card-body" style="width:15em;">

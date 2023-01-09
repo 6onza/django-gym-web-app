@@ -227,11 +227,11 @@
         <div id="login-form" class="d-none">
             <!-- cruz cerrar -->
             <i class="fa-solid fa-times-circle " style=" font-size: 25px; float: right; cursor: pointer;" onclick="showHideContactForm('close')"></i>
-            <h5 style="color: #b92323">Accede a tu cuenta</h5>
+            <h5 style="color: #b92323" class="text-center">Accede a tu cuenta</h5>
             <form id="loginForm" action="https://127.0.0.1:8000/api/v1/login" method="POST">
                 <div class="mb-3">
                     <label for="usuario" class="form-label">Usuario</label>
-                    <input type="username" class="form-control" id="username" name="username">
+                    <input autofocus type="username" class="form-control" id="username" name="username">
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Contraseña</label>

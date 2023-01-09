@@ -1,10 +1,10 @@
 
 function getCookie(cname) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for(var i = 0; i <ca.length; i++) {
-        var c = ca[i];
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+        let c = ca[i];
     while (c.charAt(0) == ' ') {
         c = c.substring(1);
     }
@@ -17,7 +17,7 @@ function getCookie(cname) {
 
 function removeFromCart(productId) {
     // Obtén el valor actual de la cookie
-    var cart = getCookie("cart");
+    let cart = getCookie("cart");
 
     if (cart.includes(productId)) {
         // Si el producto ya está en el carrito, elimínalo
@@ -70,15 +70,7 @@ window.onload = async () => {
                     </td>
                     <td style="color: #fff;" class="mt-5">${product.price}</td>
                     <td style="color: #fff;" class="mt-5">
-                    <span class="qty" id="qty-${product.id}">1</span>
-                    <div class="btn-group radio-group" data-toggle="buttons">
-                        <label class="btn btn-sm btn-secondary btn-rounded waves-effect waves-light" onclick="decreaseQuantity(${product.id}, ${product.price})">
-                            <a href="#" style="text-decoration: none; color: #000">—</a>
-                        </label>
-                        <label class="btn btn-sm btn-secondary btn-rounded waves-effect waves-light" onclick="increaseQuantity(${product.id}, ${product.price})">
-                            <a href="#" style="text-decoration: none; color: #000">+</a>
-                        </label>
-                    </div>
+                    <span class="qty text-center ms-4" id="qty-${product.id}">1</span>
                     </td>
                     <td class="font-weight-bold mt-5" style="color: #fff;">
                         <strong id="price-${product.id}" class="product-price">${product.price}</strong>
@@ -95,24 +87,25 @@ window.onload = async () => {
     updateTotalCartPrice();
 }
 
-function increaseQuantity(id, price) {
-    const quantity = document.querySelector(`#qty-${id}`);
-    quantity.innerHTML = parseInt(quantity.innerHTML) + 1;
-    const priceElement = document.querySelector(`#price-${id}`);
-    priceElement.innerHTML = parseInt(priceElement.innerHTML) + price;
-    updateTotalCartPrice();
+// function increaseQuantity(id, price) {
+//     const quantity = document.querySelector(`#qty-${id}`);
+//     quantity.innerHTML = parseInt(quantity.innerHTML) + 1;
+//     const priceElement = document.querySelector(`#price-${id}`);
+//     priceElement.innerHTML = parseInt(priceElement.innerHTML) + price;
+//     updateTotalCartPrice();
 
-}
+// }
 
-function decreaseQuantity(id, price) {
-    const quantity = document.querySelector(`#qty-${id}`);
-    if (quantity.innerHTML > 1) {
-        quantity.innerHTML = parseInt(quantity.innerHTML) - 1;
-        const priceElement = document.querySelector(`#price-${id}`);
-        priceElement.innerHTML = parseInt(priceElement.innerHTML) - price;
-    }
-    updateTotalCartPrice();
-}
+// function decreaseQuantity(id, price) {
+//     const quantity = document.querySelector(`#qty-${id}`);
+//     if (quantity.innerHTML > 1) {
+//         quantity.innerHTML = parseInt(quantity.innerHTML) - 1;
+//         const priceElement = document.querySelector(`#price-${id}`);
+//         priceElement.innerHTML = parseInt(priceElement.innerHTML) - price;
+//     }
+//     updateTotalCartPrice();
+// }
+
 function updateTotalCartPrice() {
     const prices = document.querySelectorAll('.product-price');
     let total = 0;
@@ -122,3 +115,36 @@ function updateTotalCartPrice() {
     document.querySelector('#total-cart-price').innerHTML = total;
 }
 
+function buy(){
+    // obtengo el token que se encuentra en el local storage
+    let token = localStorage.getItem("token");
+
+    fetch("http://localhost:8000/api/v1/verify-auth/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": token
+    }
+    })
+    .then(response => {
+    if (response.status === 200) {
+        // El usuario está autenticado
+        let buyButton = document.querySelector('#cart-buy');
+        buyButton.innerHTML = "Comprando...";
+        buyButton.disabled = true;
+        setTimeout(() => {
+            document.cookie = "cart=; path=/";
+            window.location.href = "http://localhost:5500/frontend/index.html";
+        }, 2000);
+
+    } else {
+        // El usuario no está autenticado o el token es inválido
+        alert("Debes iniciar sesión para poder comprar.")
+    }
+    })
+    .catch(error => {
+        // Hubo un error al realizar la solicitud
+        console.error(error)
+        alert("Hubo un error al verificar la autenticación. Por favor, inténtelo de nuevo más tarde.")
+    });
+}

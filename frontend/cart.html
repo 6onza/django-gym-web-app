@@ -48,7 +48,7 @@
                 <ul class="navbar-nav mb-0 mb-lg-0 ms-auto  ">
                     <li class="cart-icon me-4 nav-item ms-2 mt-1" style="font-size:1.8em;">
                         <a href="/frontend/cart.html">
-                            <i class="fa fa-shopping-cart" style="color: #b92323; height: 100%; width: 100%;"></i>
+                            <i class="fa fa-shopping-cart" style="color: #b92323;"></i>
                             <!-- Este es el globito que se muestra cuando hay items en el carrito -->
                             <div id="cart-badge">
                                 <span id="cart-badge-count">0</span>
@@ -57,11 +57,11 @@
                               
                     </li>
                            
-                    <li class=" me-2 nav-item ms-2" id="login" style="color: #ffffff; text-align: center; transition: .3s;">
-                        <button onclick="showLoginForm();" class="btn btn-outline-danger" style="border-radius: 20px; font-size: 1.2em; font-weight: 600; padding: 10px 20px;">Ingresar</button>
+                    <li class=" me-2 nav-item ms-2 mt-1" id="login" style="color: #ffffff; text-align: center; transition: .3s;">
+                        <button onclick="showLoginForm();" class="btn btn-outline-danger" style="border-radius: 20px; font-size: 1.2em; font-weight: 600; padding: 10px 20px; width: 6em;">Ingresar</button>
                     </li>
-                    <li class="me-2 nav-item ms-2 d-none" id="logout" style="color: #ffffff; text-align: center; transition: .3s;">
-                        <button onclick="logout();" class="btn btn-outline-danger" style="border-radius: 20px; font-size: 1.2em; font-weight: 600; padding: 10px 20px;">Salir</button>
+                    <li class="me-2 nav-item ms-2 d-none mt-1" id="logout" style="color: #ffffff; text-align: center; transition: .3s;">
+                        <button onclick="logout();" class="btn btn-outline-danger" style="border-radius: 20px; font-size: 1.2em; font-weight: 600; padding: 10px 20px;width: 6em;">Salir</button>
                     </li>
                 </ul>
             </div>
@@ -83,10 +83,10 @@
                                         <th scope="col"></th>
                                     </tr>
                                 </thead>
-                            <tbody id="cart-table-body" class="mt-5 mb-5">
+                            <tbody id="cart-table-body">
                                 <!-- cart empty -->
-                                <tr class="d-none " id="cart-empty">
-                                    <td colspan="5" class="text-center">No hay productos en el carrito</td>
+                                <tr class="d-none mt-5 mb-5" id="cart-empty">
+                                    <td colspan="5" class="text-center" style="color: #b92323;">No hay productos en el carrito</td>
                                 </tr>
                             </tbody>
                             <!-- buy button -->
@@ -104,11 +104,27 @@
                         </table>
                     </div>
                 </div>
-                  
             </div>
         </div>
     </div>
+    <div id="login-form" class="d-none">
+        <!-- cruz cerrar -->
+        <i class="fa-solid fa-times-circle " style=" font-size: 25px; float: right; cursor: pointer;" onclick="showHideContactForm('close')"></i>
+        <h5 style="color: #b92323" class="text-center">Accede a tu cuenta</h5>
+        <form id="loginForm" action="https://127.0.0.1:8000/api/v1/login" method="POST">
+            <div class="mb-3">
+                <label for="usuario" class="form-label">Usuario</label>
+                <input autofocus type="username" class="form-control" id="username" name="username">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" id="password" name="password">
+            </div>
+            <button type="submit" class="btn btn-dark">Ingresar</button>
+        </form>
+    </div>
     <script src="static/js/cart.js"></script>
+    <script src="static/js/validations.js"></script>
     
 </body>
 </html>

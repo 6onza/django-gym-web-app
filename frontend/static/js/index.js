@@ -74,7 +74,7 @@ const loadProducts = async () => {
         products.forEach(product => {
             let productDiv = document.createElement('div');
             productDiv.innerHTML = `
-            <div class="col-12 col-md-6 col-lg-2 ms-4 me-4 mt-5 ms-5 product ${product.category}  d-none" style="width:15em;">
+            <div class="col-12 col-md-6 col-lg-2 ms-4 me-4  mt-5 ms-5 product ${product.category}  d-none" style="width:15em;">
                 <div class="product-card" >
                     <img src="public/products/${product.name}.png" width="100em" height="100em"  alt="...">
                     <div class="card-body" style="width:15em;">
@@ -83,7 +83,7 @@ const loadProducts = async () => {
                         <p class="card-text ">$${product.price}</p>
                         
                         <button class="btn btn-dark ms-5" onclick="addToCart(${product.id})">Comprar</button>
-                    </div>
+                    </div
                 </div>
             </div>
             `;
@@ -116,31 +116,6 @@ function showHideContactForm(action) {
 
 
 
-// verifico si esta logeado el usuario
-if (localStorage.getItem('token')) {
-    // si esta logeado lo redirijo a la pagina de productos
-    document.querySelector('#login').classList.add('d-none');
-    document.querySelector('#logout').classList.remove('d-none');
-    // document.querySelector('#cart').classList.remove('d-none');
-    // document.querySelector('#profile').classList.remove('d-none');
-} else {
-    // si no esta logeado lo redirijo a la pagina de login
-    document.querySelector('#login').classList.remove('d-none');
-    document.querySelector('#logout').classList.add('d-none');
-    // document.querySelector('#cart').classList.add('d-none');
-    // document.querySelector('#profile').classList.add('d-none');
-}
-
-function showLoginForm(){
-    let loginForm = document.querySelector('#login-form');
-    loginForm.classList.remove('d-none');
-    loginForm.classList.add('animate__animated', 'animate__fadeInDown');
-}
-
-function logout() {
-    localStorage.removeItem('token');
-    window.location.href = 'http://localhost:5500/frontend/index.html';
-}
 
 function setCookie(cname, cvalue, exdays) {
     var d = new Date();

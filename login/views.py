@@ -7,14 +7,12 @@ from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.db import IntegrityError
 from django.contrib.auth.models import User
+from rest_framework.authentication import TokenAuthentication
 
 
 class LoginView(APIView):
-    permission_classes = (AllowAny,)
 
     def post(self, request, *args, **kwargs):
-        print("*"*100)
-        print(request.data)
         username = request.data.get("username")
         password = request.data.get("password")
         user = authenticate(username=username, password=password)
@@ -48,3 +46,16 @@ class RegisterView(APIView):
                             status=status.HTTP_400_BAD_REQUEST)
         token = Token.objects.create(user=user)
         return Response({"token": token.key}, status=status.HTTP_201_CREATED)
+
+class VerifyAuthView(APIView):
+    authentication_classes = (TokenAuthentication,)
+
+    def __init__(self):
+        self.authentication = TokenAuthentication()
+
+    def post(self, request):
+        user, _ = self.authentication.authenticate_credentials(request.META.get("HTTP_AUTHORIZATION"))
+        if user is not None:
+            return Response(status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)

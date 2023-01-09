@@ -2,7 +2,7 @@ from rest_framework.response import Response
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated,IsAdminUser 
 from rest_framework.authentication import BasicAuthentication
-from .models import Product
+from .models import Product, CartItem, Cart
 from .serializers import ProductsSerializer
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
@@ -26,8 +26,7 @@ class ProductsView(viewsets.ModelViewSet):
             serializer = self.serializer_class(products, many=True)
             
             return Response(serializer.data)
-    
-    
+
     def put(self, request, pk):
         product = self.queryset.get(pk=pk)
         serializer = ProductsSerializer(product, data=request.data)
@@ -44,3 +43,5 @@ class ProductsView(viewsets.ModelViewSet):
         product.delete()
         
         return Response(status=204)
+
+    

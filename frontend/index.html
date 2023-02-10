@@ -19,8 +19,7 @@
     <meta name="author" content="Gym">
     <meta name="robots" content="index, follow">
     <meta name="googlebot" content="index, follow">
-
-
+    
     <title>Gym</title>
 </head>
 <body>
@@ -39,11 +38,11 @@
                 </div>
             </a>
         </div>
-        <div class="container-fluid ps-3 mt-4 h-100 w-100 ">
-            <a class="navbar-brand pt-0 text-white" href="#">
-                <img src="public/logo.png" alt="logo" style="padding-top:10%;height: 3em; width: 5em;">
+        <div class="container-fluid ps-3 pt-1 pb-0 mt-0 h-100 w-100 ">
+            <a class="navbar-brand p-0 m-0 ms-3 text-white" href="#">
+                <img src="public/logo.png" alt="logo" style="height: 5em; width: 5em;">
             </a>
-            <button class="navbar-toggler bg-dark mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler bg-dark " type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
             <div class="collapse navbar-collapse" id="navbarText">
@@ -51,7 +50,6 @@
                     <li class="cart-icon me-4 nav-item ms-2 mt-1 text-center mb-3" style="font-size:1.8em;">
                         <a href="cart.html">
                             <i class="fa fa-shopping-cart" style="color: #b92323;"></i>
-                            <!-- Este es el globito que se muestra cuando hay items en el carrito -->
                             <div id="cart-badge">
                                 <span id="cart-badge-count">0</span>
                             </div>
@@ -60,7 +58,7 @@
                     </li>
                            
                     <li class=" me-2 nav-item ms-2 mt-1" id="login" style="color: #ffffff; text-align: center; transition: .3s;">
-                        <button onclick="showLoginForm();" class="btn btn-outline-danger" style="border-radius: 20px; font-size: 1.2em; font-weight: 600; padding: 10px 20px; width: 6em;">Ingresar</button>
+                        <button onclick="showLoginForm();" class="btn btn-outline-danger" style="border-radius: 20px; font-size: 1.2em; font-weight: 600; padding:10px; width: 6em;">Ingresar</button>
                     </li>
                     <li class="me-2 nav-item ms-2 d-none mt-1" id="logout" style="color: #ffffff; text-align: center; transition: .3s;">
                         <button onclick="logout();" class="btn btn-outline-danger" style="border-radius: 20px; font-size: 1.2em; font-weight: 600; padding: 10px 20px;width: 6em;">Salir</button>
@@ -86,15 +84,41 @@
             </a>
         </div>
     </div>
-    <div class="membresias container" id="membresias">
+    <div class="membresias container d-flex" id="membresias">
         <div class="container-membresias" style="justify-content: center; align-items: center; display: flex;">
-            <div class="entrena-con-nosotros w-100 mt-5">
+            <div class="entrena-con-nosotros mt-5">
                 <h3>¡ENTRENA CON NOSOTROS!</h3>
-                <p>Te ofrecemos el primer dia de prueba gratis, para que puedas conocer<br> nuestras instalaciones y nuestros servicios.</p>
-                <div class="carousel-videos m-0 p-0">
-                    <!-- <video width="100%" height="100%" autobuffer playsinline="" preload="auto" muted="" loop="" tabindex="-1" autoplay="">
-                        <source src="public/crossfit.mp4" type="video/mp4">
-                    </video> -->
+                <p>Te ofrecemos el primer dia de prueba gratis, para que puedas <br>conocer nuestras instalaciones y nuestros servicios.</p>
+                <div class="carousel-videos m-0 pt-4">
+                    <div id="carouselExampleCaptions" class="carousel slide container p-0 m-0 " style="width: 80%;"  data-bs-ride="carousel">
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                        </div>
+                        <div class="carousel-inner">
+                            <div class="carousel-item carousel-item__actividades active" style="height: 20em;display: flex; justify-content: center; align-items: center;">
+                                <img src="public/crossfit.jpg" alt="crossfit class"  class="h-100 w-100">
+                                <h3 class="carousel-caption d-none d-md-block" style="color: #000; font-size: 2em; font-weight: 700; top: 5%; left: 0%;">CROSSFIT</h3>
+                            </div>
+                            <div class="carousel-item carousel-item__actividades" style="height: 20em;">
+                                <img src="public/zumba.jpg" alt="zumba class" class="h-100 w-100">
+                                <h3 class="carousel-caption d-none d-md-block" style="color: #000; font-size: 2em; font-weight: 700; top: 5%; left: 0%;">ZUMBA</h3>
+                            </div>
+                            <div class="carousel-item carousel-item__actividades" style="height: 20em;">
+                                <img src="public/kickboxing.jpg" alt="kickboxing class" class="h-100 w-100">
+                                
+                                <h3 class="carousel-caption d-none d-md-block" style="color: #000; font-size: 2em; font-weight: 700; top: 5%; left: 0%;">KICKBOXING</h3>
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+
+                        </button> 
+                    </div> 
+                </div>
                 </div>
             </div>
             <div class="membresia me-5 mt-5" style="color: #fff">
@@ -110,8 +134,8 @@
                         <li><i class="fa fa-check"></i>Funcional</li>
                         <li><i class="fa fa-check"></i>Cardio</li>
                         <li><i class="fa fa-check"></i>Boxeo</li>
-                    <a href="" class="text-decoration-none">
-                        <div class="btn btn-dark ms-5 mt-5">Contratar</div>
+                    <a href="" class="text-decoration-none ms-5 ps-4">
+                        <div class="btn btn-dark ms-5 mt-5 ">Más info</div>
                     </a>
                 </div>
             </div>
@@ -128,45 +152,12 @@
                         <li><i class="fa fa-check"></i>Funcional</li>
                         <li><i class="fa fa-check"></i>Cardio</li>
                         <li><i class="fa fa-check"></i>Boxeo</li>
-                    <a href="" class="text-decoration-none">
-                        <div class="btn btn-dark ms-5 mt-5">Contratar</div>
+                    <a href="" class="text-decoration-none ms-5 ps-4">
+                        <div class="btn btn-dark ms-5 mt-5 ">Más info</div>
                     </a>
                 </div>
             </div>
-        </div>
-        <div class="comodidades">
-            <!-- grid responsive de comodidades -->
-            <div class="row">
-                <div class="col-12 col md-6 col-lg-2 comodidad">
-                <i class="fa fa-shower"></i>
-                <h5 class="pt-3">Duchas</h5>
-            </div>
-            <!-- icono de lockers -->
-            <div class="col-12 col md-6 col-lg-2 comodidad">
-                <i class="fa fa-lock"></i>
-                <h5 class="pt-3">Lockers</h5>
-            </div>
-            <div class="col-12 col md-6 col-lg-2 comodidad">
-                <i class="fa-solid fa-utensils"></i>
-                <h5 class="pt-3">Buffet</h5>
-            </div>
-            <div class="col-12 col md-6 col-lg-2 comodidad">
-                <!-- musculacion -->
-                <i class="fa-solid fa-dumbbell"></i>
-                <h5 class="pt-3">Musculación</h5>
-            </div>
-            <div class="col-12 col md-6 col-lg-2 comodidad">
-                <!-- clases -->
-                <i class="fa-solid fa-users"></i>
-                <h5 class="pt-3">Clases</h5>
-            </div>
-            <div class="col-12 col md-6 col-lg-2 comodidad">
-                <!-- rutinas -->
-                <!-- icono papel -->
-                <i class="fa-solid fa-file-alt"></i>
-                <h5 class="pt-3">Rutinas</h5>
-            </div>
-            </div>
+            
         </div>
     </div>
 
@@ -215,11 +206,14 @@
                     <p style="color: #606060;" class="mb-0"><span style="color: #ffffff">Sábados:</span> 9:00 a 14:00</p>
                     <p style="color: #606060;" class="mb-0"><span style="color: #ffffff">Domingos:</span> Cerrado</p>
                 </div>
-                 <div class="horarios pt-5 mb-5" >
-                    <h5 style="color: #b92323;">Seguinos</h5>
-                    <a href="#" style="text-decoration: none; color: #606060;"><i class="pe-2 fa-brands fa-instagram"></i></a>
-                    <a href="#" style="text-decoration: none; color: #606060;"><i class="pe-2 fa-brands fa-facebook"></i></a>
-                    <a href="#" style="text-decoration: none; color: #606060;"><i class="fa-brands fa-twitter"></i></a>
+                 <div class="horarios pt-5 mb-5 text-center" >
+                    <h5 style="color: #b92323;margin-bottom: 20px;">Seguinos</h5>
+                    <a href="#" style="text-decoration: none;color:#fff;" >
+                        <i class="fa-brands fa-instagram" style="font-size: 1.3em;"></i>
+                    </a>
+                    <a href="#" style="text-decoration: none;color:#fff" class="ms-4">
+                        <i class="fa-brands fa-facebook" style="font-size: 1.3em;"></i>
+                    </a>
                 </div>
             </div>
            
@@ -245,13 +239,28 @@
         </p>
     </footer>
     <!-- icono fijo de whatsapp      -->
-    <a href="https://api.whatsapp.com/send?phone=5491131234567" target="_blank" class="whatsapp-fijo">
-        <i class="fa-brands fa-whatsapp"></i>
-    </a>
+    
+    <div id="whatsapp-dialog" class="d-flex align-items-center">
+       
+        <a href="https://api.whatsapp.com/send?phone=5491131234567" target="_blank" class="whatsapp-fijo">
+            <i class="fa-brands fa-whatsapp"></i>
+        </a> 
+    </div>
+    
     <!-- volver a arriba -->
     <a href="#" class="volver-arriba d-">
         <i class="fa-solid fa-chevron-up"></i>
     </a>
+    <div class="error-message container-fluid text-center d-none" style="height: 20em; width: 35em; top: 25%; left: 40%; position: absolute; z-index: 9999;">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-danger mt-5">Error</h1>
+                <p class="text-white mt-5" id="error-message">No iniciaste sesion.</p>
+                <button class="btn btn-danger mt-5" onclick="errorMessage('hide','')">Cerrar</button>
+            </div>
+        </div>
+
+    </div>
   
     <script src="static/js/index.js"></script>
     <script src="static/js/validations.js"></script>

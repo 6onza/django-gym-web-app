@@ -34,7 +34,6 @@ nav{
     border-bottom: 5px solid #881010;
 }
 .nav-links--scrolled{
-    margin-top: 1%;
     transition: .3s;
 }
 .nav-link{
@@ -67,7 +66,6 @@ nav button{
     color: #ffffff;
     border: 0px;
     border-radius: 5px;
-    padding: 1%;
     font-size: 1.5rem;
     font-weight: 500;
     transition: .3s;

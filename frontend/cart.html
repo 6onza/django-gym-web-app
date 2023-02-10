@@ -67,8 +67,8 @@
             </div>
         </div>
     </nav>
-    <div class="container-fluid mt-5 pt-5">
-        <div class="row">
+    <div class="container-fluid mt-5 pt-5 justify-content-center">
+        <div class="row ">
             <div class="col-12 col-md-8">
                 <div class="row ms-0 mt-5 ">
                     <div class="col-16">
@@ -122,6 +122,16 @@
             </div>
             <button type="submit" class="btn btn-dark">Ingresar</button>
         </form>
+    </div>
+    <div class="error-message container-fluid text-center d-none" style="height: 20em; width: 35em; top: 25%; left: 40%; position: absolute; z-index: 9999;">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-danger mt-5">Error</h1>
+                <p class="text-white mt-5" id="error-message">No iniciaste sesion.</p>
+                <button class="btn btn-danger mt-5" onclick="errorMessage('hide','')">Cerrar</button>
+            </div>
+        </div>
+
     </div>
     <script src="static/js/cart.js"></script>
     <script src="static/js/validations.js"></script>

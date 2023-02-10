@@ -13,7 +13,6 @@ class Product(models.Model):
         ('bebidas', 'bebidas'),
     )
 
-    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=200, blank=False)
     category = models.CharField(max_length=200, choices=CATEGORY_OPTIONS, blank=False, default=None)
     description = models.TextField(blank=True)
@@ -33,13 +32,28 @@ class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    checked_out = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username
 
-
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.product.name
+
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.id) + ' - ' + self.user.username 
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
     def __str__(self):

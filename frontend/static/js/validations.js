@@ -22,7 +22,8 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
                 localStorage.setItem('token', data.token);
                 window.location.href = 'http://localhost:5500/frontend/index.html';
             } else {
-                alert('Usuario o contraseña incorrectos');
+                errorMessage("show", 'Usuario o contraseña incorrectos');
+
             }
         });
     } 
@@ -51,4 +52,36 @@ function showLoginForm(){
 function logout() {
     localStorage.removeItem('token');
     window.location.href = 'http://localhost:5500/frontend/index.html';
+}
+
+
+
+function errorMessage(action, message){
+    let error = document.querySelector('.error-message');
+    let errorText = document.querySelector('#error-message');
+    console.log(message)
+    if (action == "show") {
+        error.classList.remove('d-none');
+        errorText.innerHTML = message;
+    } else if (action == "hide") {
+        error.classList.add('d-none');
+    }    
+}
+
+function showHideContactForm(action) {
+    let form = document.querySelector('#login-form');
+    if(action == 'open'){
+        // creo la animacion para la apertura del formulario
+        form.classList.remove('d-none');
+        form.classList.add('animate__animated', 'animate__fadeInDown');
+    }
+    if(action == 'close'){
+        form.classList.add('d-none');
+        form.classList.remove('animate__animated', 'animated__fadeInUp');
+    }
+}
+
+function mostrarMenu(){
+    let menu = document.querySelector('#menu');
+    menu.classList.toggle('d-none');
 }

@@ -101,19 +101,6 @@ function loadCardAnimation() {
     card.classList.add('animate__animated', 'animate__fadeInDown');
 }
 
-function showHideContactForm(action) {
-    let form = document.querySelector('#login-form');
-    if(action == 'open'){
-        // creo la animacion para la apertura del formulario
-        form.classList.remove('d-none');
-        form.classList.add('animate__animated', 'animate__fadeInDown');
-    }
-    if(action == 'close'){
-        form.classList.add('d-none');
-        form.classList.remove('animate__animated', 'animated__fadeInUp');
-    }
-}
-
 
 
 
@@ -156,54 +143,47 @@ function updateCartIcon() {
 }
 updateCartIcon();
 
-function addToCart(item) {
-    // Obtén el valor actual de la cookie
-    var cart = getCookie("cart");
-
-    // Si la cookie está vacía, inicializa el carrito como una lista vacía
-    if (cart == "") {
-        cart = [];
-    } else {
-        // Si no está vacía, convierte el valor de la cookie en una lista
-        cart = JSON.parse(cart);
+async function addToCart(item) {
+    let token = localStorage.getItem('token');
+    if (token == null) {
+        window.location.href = "http://localhost:8000/login";
     }
 
-    // Añade el elemento a la lista si no existe en el carrito
-    if (cart.indexOf(item) == -1) {
-        cart.push(item);
-    }
+    fetch("http://localhost:8000/api/v1/cart-add-item/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Token " + token
+        },
+        body: JSON.stringify({
+            "product_id": item
+        })
+    })
+    .then(response => response.json())
+    .catch(error => console.log(error))
+    .finally(() => {
+        // Obtén el valor actual de la cookie
+        var cart = getCookie("cart");
+
+        // Si la cookie está vacía, inicializa el carrito como una lista vacía
+        if (cart == "") {
+            cart = [];
+        } else {
+            // Si no está vacía, convierte el valor de la cookie en una lista
+            cart = JSON.parse(cart);
+        }
+
+        // Añade el elemento a la lista si no existe en el carrito
+        if (cart.indexOf(item) == -1) {
+            cart.push(item);
+        }
+        
+
+        // Guarda la lista actualizada en la cookie
+        setCookie("cart", JSON.stringify(cart), 7);
+        updateCartIcon();
+    })
     
-
-    // Guarda la lista actualizada en la cookie
-    setCookie("cart", JSON.stringify(cart), 7);
-    updateCartIcon();
+    
 }
 
-function removeFromCart(item) {
-    // Obtén el valor actual de la cookie
-    var cart = getCookie("cart");
-
-    // Si la cookie está vacía, inicializa el carrito como una lista vacía
-    if (cart == "") {
-        cart = [];
-    } else {
-        // Si no está vacía, convierte el valor de la cookie en una lista
-        cart = JSON.parse(cart);
-    }
-
-    // Encuentra el índice del elemento a eliminar
-    var index = cart.indexOf(item);
-
-    // Si el elemento existe en el carrito, elimínalo
-    if (index > -1) {
-        cart.splice(index, 1);
-    }
-
-    // Guarda la lista actualizada en la cookie
-    setCookie("cart", JSON.stringify(cart), 7);
-}
-
-function clearCart() {
-    setCookie("cart", "", 7);
-    updateCartIcon();
-}

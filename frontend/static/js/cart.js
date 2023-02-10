@@ -15,21 +15,47 @@ function getCookie(cname) {
     return "";
 }
 
-function removeFromCart(productId) {
-    // Obtén el valor actual de la cookie
-    let cart = getCookie("cart");
-
-    if (cart.includes(productId)) {
-        // Si el producto ya está en el carrito, elimínalo
-        cart = cart.replace(productId + ",", "").replace("," + productId, "").replace(productId, "");
-        // Actualiza la cookie
-        document.cookie = "cart=" + cart + "; path=/";
-        // Elimina el producto de la tabla
-        document.querySelector(`#cart-table-body tr td button[onclick="removeFromCart(${productId})"]`).parentElement.parentElement.remove();
+async function removeFromCart(item) {
+    let token = localStorage.getItem('token');
+    if (token == null) {
+        window.location.href = "http://localhost:8000/login";
     }
-    updateTotalCartPrice();
-}
 
+    fetch("http://localhost:8000/api/v1/cart-delete-item/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Token " + token
+        },
+        body: JSON.stringify({
+            "product_id": item
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status == "success") {
+            alert("Producto eliminado del carrito");
+        }
+        else {
+            alert("Error al eliminar el producto al carrito");
+        }
+    })
+    .catch(error => console.log(error))
+    .finally(() => {
+        // Obtén el valor actual de la cookie
+        let cart = getCookie("cart");
+
+        if (cart.includes(productId)) {
+            // Si el producto ya está en el carrito, elimínalo
+            cart = cart.replace(productId + ",", "").replace("," + productId, "").replace(productId, "");
+            // Actualiza la cookie
+            document.cookie = "cart=" + cart + "; path=/";
+            // Elimina el producto de la tabla
+            document.querySelector(`#cart-table-body tr td button[onclick="removeFromCart(${productId})"]`).parentElement.parentElement.remove();
+        }
+        updateTotalCartPrice();
+})
+}
 
 
 window.onload = async () => {
@@ -87,24 +113,6 @@ window.onload = async () => {
     updateTotalCartPrice();
 }
 
-// function increaseQuantity(id, price) {
-//     const quantity = document.querySelector(`#qty-${id}`);
-//     quantity.innerHTML = parseInt(quantity.innerHTML) + 1;
-//     const priceElement = document.querySelector(`#price-${id}`);
-//     priceElement.innerHTML = parseInt(priceElement.innerHTML) + price;
-//     updateTotalCartPrice();
-
-// }
-
-// function decreaseQuantity(id, price) {
-//     const quantity = document.querySelector(`#qty-${id}`);
-//     if (quantity.innerHTML > 1) {
-//         quantity.innerHTML = parseInt(quantity.innerHTML) - 1;
-//         const priceElement = document.querySelector(`#price-${id}`);
-//         priceElement.innerHTML = parseInt(priceElement.innerHTML) - price;
-//     }
-//     updateTotalCartPrice();
-// }
 
 function updateTotalCartPrice() {
     const prices = document.querySelectorAll('.product-price');
@@ -132,19 +140,31 @@ function buy(){
         let buyButton = document.querySelector('#cart-buy');
         buyButton.innerHTML = "Comprando...";
         buyButton.disabled = true;
-        setTimeout(() => {
-            document.cookie = "cart=; path=/";
-            window.location.href = "http://localhost:5500/frontend/index.html";
-        }, 2000);
+        // obtengo los valores de la cookie y los envio al endpoint 
+        let cart = getCookie("cart");
+        let products = cart.split(",");
+        let data = {
+            products: products
+        }
+        fetch("http://localhost:8000/api/v1/buy/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": token
+            },
+            body: JSON.stringify(data)
+        })
+        
 
     } else {
         // El usuario no está autenticado o el token es inválido
-        alert("Debes iniciar sesión para poder comprar.")
+        errorMessage("show", 'No iniciaste sesion');
+        showHideContactForm('close');
     }
     })
     .catch(error => {
         // Hubo un error al realizar la solicitud
         console.error(error)
-        alert("Hubo un error al verificar la autenticación. Por favor, inténtelo de nuevo más tarde.")
+        errorMessage()
     });
 }
